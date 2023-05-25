@@ -9,6 +9,18 @@ const hiddenButton = document.querySelector(".play-again");
 
 const word = "magnolia";
 const guessedLetters = [];
+const remainingGuesses = 8;
+
+const getWord = async function (){
+    const response = await fetch("https://gist.githubusercontent.com/skillcrush-curriculum/7061f1d4d3d5bfe47efbfbcfe42bf57e/raw/5ffc447694486e7dea686f34a6c085ae371b43fe/words.txt");
+    const words = await response.text();
+    const wordArray = words.split("\n");
+    const randomIndex = Math.floor(Math.random() * wordArray.length);
+    word = wordArray[randomIndex].trim();
+    placeholder(word);
+};
+
+getWord();
 
 const empty = function (word){
     const emptyletter = [];
@@ -70,10 +82,32 @@ const updateTheWord = function (guessedLetters) {
     console.log(wordArray);
 };
 
+
+const acceptGuess = function (guess){
+    const guessWord = word.toUpperCase();
+    if (!word.classList.contains(guess)){
+        console.log("sorry, the word doesnt contain the letter");
+        remainingGuess -=1;
+    } else {
+        console.log("The letter is in the word");
+    };
+
+    if (remainingGuesses === 0 ){
+        console.log("the game is over");
+    } else if (remainingGuesses === 1){
+        console.log("you have 1 more guess remaining");
+    } else {
+        console.log(`you have ${remainingGuesses} guesses remaining`);
+    }
+
+};
+
+
 const toCheck = function (){
     if (word.toUpperCase === wordInProgress){
         console.log("Win!");
         emptyMessages.classList.add("win");
-        emptyMessages.innerHTML = `<p class="highlight">You guessed correct the word! Congrats!</p>`;
+        emptyMessages.innerHTML = `<p class="highlight"> You guessed correct the word! Congrats!</p>`;
     }
 };
+
