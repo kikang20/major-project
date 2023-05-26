@@ -23,28 +23,35 @@ const getWord = async function (){
 getWord();
 
 const empty = function (word){
-    const emptyletter = [];
+    const emptyLetter = [];
     for (const letter of word){
-        console.log(letter);
-        emptyletter.push("●");
+        //console.log(letter);
+        emptyLetter.push("●");
     }
-    wordInProgress.innerText = emptyletter.join("");
+    wordInProgress.innerText = emptyLetter.join("");
 };
 
-empty(word);
+
 
 guessButton.addEventListener("click", function (e){
     e.preventDefault();
     const capture = guessTextInput.value;
-    console.log(capture);
+    //console.log(capture);
+    const correctGuess = playersInput(guess);
+
+    if (correctGuess){
+        makeGuess(guess);
+    }
     guessTextInput.value = "";
     
 });
 
 const playersInput = function (input){
     const acceptedLetter = /[a-zA-Z]/;
-    if (input === ""){
+    if (input.length === 0){
         console.log("please enter 1 letter");
+    } else if (input.length > 1) {
+        console.log("please enter just 1 letter.");
     } else if (!input.match(acceptedLetter)){
         console.log("doesn’t match the regular expression pattern")
     } else {
@@ -54,18 +61,24 @@ const playersInput = function (input){
 
 const makeGuess = function (letter){
     guess = guess.toUpperCase();
- if (guessedLetters.includes(guess)){
+ if (guessedLetters.contains(guess)){
     console.log("youve already guessed that letter! try again.");
-    playerGuesse();
+    playerGuessed();
+ } else{
+    guessedLetters.push(guess);
+    console.log(guessedLetters);
+    playerGuesses();
  }
 };
-console.log(guessedLetters);
+
 
 const playerGuesses = function (){
     guessLetter.innerHTML = "";
+    for (const letter of guessedLetters){
     const li = document.createElement = "li";
     li.innerText = letter;
-
+    guessLetter.append(li);
+    }
 };
 
 const updateTheWord = function (guessedLetters) {
@@ -85,11 +98,11 @@ const updateTheWord = function (guessedLetters) {
 
 const acceptGuess = function (guess){
     const guessWord = word.toUpperCase();
-    if (!word.classList.contains(guess)){
+    if (!guessWord.classList.includes(guess)){
         console.log("sorry, the word doesnt contain the letter");
         remainingGuess -=1;
     } else {
-        console.log("The letter is in the word");
+        console.log("Good try.The letter is in the word");
     };
 
     if (remainingGuesses === 0 ){
@@ -104,10 +117,22 @@ const acceptGuess = function (guess){
 
 
 const toCheck = function (){
-    if (word.toUpperCase === wordInProgress){
-        console.log("Win!");
+    if (word.toUpperCase() === wordInProgress.innerText){
         emptyMessages.classList.add("win");
         emptyMessages.innerHTML = `<p class="highlight"> You guessed correct the word! Congrats!</p>`;
     }
 };
 
+const startOver = function (){
+    guessButton.classList.add(hide);
+    remainingGuess.classList.add(hide);
+    guessLetter.classList.add(hide);
+    guessButton.classList.remove(hide);
+};
+
+playAgainButton.addEventListener("click", function(){
+    emptyMessages.classList.remove("win");
+    guessLetter = [];
+    remainingGuess = 8;
+
+});
