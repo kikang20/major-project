@@ -115,9 +115,9 @@ const updateGuessesRemaining = function (guess){
         message.innerText ="the game is over";
         startOver();
     } else if (remainingGuesses === 1){
-        message.innerText = "you have 1 more guess remaining";
+        remainingGuessesSpan.innerText = "you have 1 more guess remaining";
     } else {
-        message.innerText = `you have ${remainingGuesses} guesses remaining`;
+        remainingGuessesSpan.innerText = `you have ${remainingGuesses} guesses remaining`;
     }
 
 };
@@ -125,8 +125,8 @@ const updateGuessesRemaining = function (guess){
 
 const checkIfWin = function (){
     if (word.toUpperCase() === wordInProgress.innerText){
-        emptyMessages.classList.add("win");
-        emptyMessages.innerHTML = `<p class="highlight"> You guessed correct the word! Congrats!</p>`;
+        message.classList.add("win");
+        message.innerHTML = `<p class="highlight"> You guessed correct the word! Congrats!</p>`;
         startOver();
     }
 };
