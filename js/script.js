@@ -112,7 +112,7 @@ const updateGuessesRemaining = function (guess){
     };
 
     if (remainingGuesses === 0 ){
-        message.innerText =`the game is over. The word was <span class="highlight">${word}</span>.`;
+        message.innerText =`the game is over. The word was <span>${word}</span>.`;
         startOver();
     } else if (remainingGuesses === 1){
         remainingGuessesSpan.innerText = "you have 1 more guess remaining";
