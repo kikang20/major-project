@@ -54,7 +54,7 @@ const validateInput = function (input) {
     } else if (input.length > 1) {
         message.innerText = `please enter just 1 letter.`;
     } else if (!input.match(acceptedLetter)){
-        message.innerText = `doesn’t match the regular expression pattern`;
+        message.innerText = `You can only type a letter. No number or special character`;
     } else {
         return input;
     }
@@ -65,7 +65,7 @@ const validateInput = function (input) {
 const makeGuess = function (guess){
     guess = guess.toUpperCase();
  if (guessedLetters.includes(guess)){
-    message.innerText = `youve already guessed that letter! try again.`;
+    message.innerText = `you've already guessed that letter! Try again.`;
    
  } else {
     guessedLetters.push(guess);
@@ -105,7 +105,7 @@ const updateWordInProgress = function (guessedLetters) {
 const updateGuessesRemaining = function (guess){
     const wordUpper = word.toUpperCase();
     if (!wordUpper.includes(guess)){
-        message.innerText = "sorry, the word doesnt contain the letter";
+        message.innerText = "sorry, the word does not contain the letter";
         remainingGuesses -= 1;
     } else {
         message.innerText= "Good try.The letter is in the word";
@@ -142,6 +142,8 @@ playAgainButton.addEventListener("click", function(){
     message.classList.remove("win");
     guessedLetters = [];
     remainingGuesses = 8;
+    remainingGuessesSpan.innerText = `${remainingGuesses} guesses`;
+    guessedLettersElement.innerHTML = "";
     message.innerText = "";
 
     getWord();
